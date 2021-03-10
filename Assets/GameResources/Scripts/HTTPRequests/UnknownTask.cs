@@ -5,9 +5,8 @@ using UnityEngine;
 /// Класс, хранящий информацию о задаче.
 /// </summary>
 [Serializable]
-public class Task : AbstractSerializableClass
+public class UnknownTask : AbstractSerializableClass
 {
-    public string id;
     public string dateStart;
     public string dateEnd;
     public string name;
@@ -15,18 +14,17 @@ public class Task : AbstractSerializableClass
     public int priority;
     public bool isDone;
     public string[] tags;
-    public string userId;
+    public string token;
 
-    public Task(string id, string dateStart, string dateEnd, string name, string info, int priority, bool isDone, string[] tags, string token)
+    public UnknownTask(string dateStart, string dateEnd, string name, string info, int priority, bool isDone, string[] tags, string token)
     {
-        this.id = id;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.name = name;
         this.info = info;
         this.priority = priority;
         this.isDone = isDone;
-        this.userId = token;
+        this.token = token;
 
         this.tags = new string[tags.Length];
         for (int i = 0; i < tags.Length; i++)
