@@ -14,11 +14,14 @@ public class HTTPRequests : MonoBehaviour
     private string login = string.Empty;
     [SerializeField]
     private string pass = string.Empty;
+    [SerializeField]
+    private Task[] tasks;
 
     private const string url = "https://task-list-for-nstu.herokuapp.com/tasks-api/";
     private const string usersApi = "users";
     private const string emailApi = "email=";
     private const string passwordApi = "&password=";
+    private const string tasksApi = "tasks/";
 
     private void Awake()
     {
@@ -33,10 +36,40 @@ public class HTTPRequests : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void Test()
+    {
+        //string json = "{\"dateStart\":\"start\",\"dateEnd\":\"end\",\"name\":\"name\",\"info\":\"info\",\"priority\":10,\"isDone\":false,\"tags\":[\"arr1\",\"arr2\",\"arr3\"],\"token\":\"token\"}";
+        //Task task = Task.CreateFromJSON(json);
+        string[] arr = { "123", "321" };
+        tasks = new Task[2];
+        tasks[0] = new Task("start1", "end1", "name1", "info1", 5, false, arr, "token1");
+        tasks[1] = new Task("start2", "end2", "name2", "info2", 10, true, arr, "token2");
+
+        Task[] tasks2 = JsonHelper.CreateArrayFromJSON<Task>(JsonHelper.SaveArrayToJson(tasks));
+
+        Debug.Log(JsonHelper.SaveArrayToJson(tasks2));
+        //StartCoroutine(GetTest(userId));
+    }
+
+    private IEnumerator GetTest(string userId)
+    {
+        UnityWebRequest uwr = UnityWebRequest.Get(url + tasksApi + userId);
+        yield return uwr.SendWebRequest();
+
+        if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
+        {
+            Debug.Log("Error While Sending: " + uwr.error);
+        }
+        else
+        {
+            Debug.Log("Received: " + uwr.downloadHandler.text);
+        }
+    }
+
     /// <summary>
     /// Авторизация пользователя
     /// </summary>
-    public void GetAuthorizationRequest()
+    public void GetAuthorizationRequest(string login, string pass)
     {
         StartCoroutine(GetAuthorization(url, login, pass));
     }
@@ -44,7 +77,7 @@ public class HTTPRequests : MonoBehaviour
     /// <summary>
     /// Регистрация пользователя
     /// </summary>
-    public void GetRegistrationRequest()
+    public void GetRegistrationRequest(string login, string pass)
     {
         StartCoroutine(GetRegistration(url, login, pass));
     }
@@ -77,9 +110,8 @@ public class HTTPRequests : MonoBehaviour
         }
         else
         {
-            User user = User.CreateFromJSON(uwr.downloadHandler.text);
-            Debug.Log("Received: " + uwr.downloadHandler.text);
-            Debug.Log(string.Format("Received: {0}, {1}, {2}", user.id, user.email, user.password));
+            User user = User.CreateFromJSON<User>(uwr.downloadHandler.text);
+            
         }
     }
 

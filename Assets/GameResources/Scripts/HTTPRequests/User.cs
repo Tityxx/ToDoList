@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Класс, хранящий информацию о пользователе.
 /// </summary>
+[Serializable]
 public class User : AbstractSerializableClass
 {
     public string id;
@@ -14,15 +16,5 @@ public class User : AbstractSerializableClass
         this.id = id;
         this.email = email;
         this.password = password;
-    }
-
-    /// <summary>
-    /// Возвращает объект типа User из json формата
-    /// </summary>
-    /// <param name="json">Строка в json формате</param>
-    /// <returns></returns>
-    public static User CreateFromJSON(string json)
-    {
-        return JsonUtility.FromJson<User>(json);
     }
 }

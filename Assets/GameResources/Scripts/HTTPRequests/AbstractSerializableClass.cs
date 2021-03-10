@@ -15,4 +15,14 @@ public abstract class AbstractSerializableClass
     {
         return JsonUtility.ToJson(this);
     }
+
+    /// <summary>
+    /// Возвращает объект типа T из json формата
+    /// </summary>
+    /// <param name="json">Строка в json формате</param>
+    /// <returns></returns>
+    public static T CreateFromJSON<T>(string json)
+    {
+        return JsonUtility.FromJson<T>(json);
+    }
 }
