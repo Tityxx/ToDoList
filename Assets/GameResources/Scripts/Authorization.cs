@@ -19,7 +19,6 @@ public class Authorization : AbstractAuthRegstr
     protected override void Start()
     {
         HTTPRequests.Instance.AuthResponse += GetAuthResponse;
-
     }
 
     protected override void OnDestroy()
