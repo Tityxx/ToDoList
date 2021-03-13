@@ -89,11 +89,8 @@ public class HTTPRequests : MonoBehaviour
 
     private IEnumerator GetRegistration(string url, User user)
     {
-        UnityWebRequest uwr = new UnityWebRequest(url + usersApi, "POST");
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(user.SaveToJson());
-        uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        uwr.SetRequestHeader("Content-Type", "application/json");
+        UnityWebRequest uwr = new UnityWebRequest(url + usersApi + "?" + emailApi + user.email + passwordApi + user.password, "POST");
+        
 
         yield return uwr.SendWebRequest();
 
@@ -272,7 +269,10 @@ public class HTTPRequests : MonoBehaviour
     private IEnumerator AddTask(string url, UnknownTask task)
     {
         UnityWebRequest uwr = new UnityWebRequest(url + tasksApi, "POST");
-        uwr.downloadHandler = new DownloadHandlerBuffer();
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(task.SaveToJson());
+        uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        uwr.SetRequestHeader("Content-Type", "application/json");
 
         yield return uwr.SendWebRequest();
 
