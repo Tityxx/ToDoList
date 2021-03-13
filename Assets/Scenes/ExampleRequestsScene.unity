@@ -948,6 +948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   login: VityaLoh
   pass: 123
+  tasks: []
 --- !u!4 &1761446571
 Transform:
   m_ObjectHideFlags: 0
