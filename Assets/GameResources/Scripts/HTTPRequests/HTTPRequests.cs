@@ -218,7 +218,10 @@ public class HTTPRequests : MonoBehaviour
 
     private IEnumerator PutTask(string url, Task task)
     {
-        UnityWebRequest uwr = UnityWebRequest.Put(url + tasksApi, task.SaveToJson());
+        Debug.Log(task.SaveToJson());
+        byte[] jsonToSend = System.Text.Encoding.UTF8.GetBytes(task.SaveToJson());
+        UnityWebRequest uwr = UnityWebRequest.Put(url + tasksApi, jsonToSend);
+        uwr.SetRequestHeader("Content-Type", "application/json");
         yield return uwr.SendWebRequest();
 
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
