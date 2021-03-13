@@ -7,13 +7,11 @@ using UnityEngine;
 [Serializable]
 public class User : AbstractSerializableClass
 {
-    public string id;
     public string email;
     public string password;
 
-    public User(string id, string email, string password)
+    public User(string email, string password)
     {
-        this.id = id;
         this.email = email;
         this.password = password;
     }

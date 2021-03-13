@@ -10,6 +10,10 @@ public class TextColorController : MonoBehaviour
 {
     [SerializeField]
     private Text text;
+    [SerializeField]
+    private Color choosenColor;
+    [SerializeField]
+    private Color notChoosenColor;
 
     private Toggle toggle;
 
@@ -24,10 +28,12 @@ public class TextColorController : MonoBehaviour
         toggle.onValueChanged.RemoveListener(ChangeColor);
     }
 
+    /// <summary>
+    /// Смена прозрачности текста
+    /// </summary>
+    /// <param name="isOn"></param>
     public void ChangeColor(bool isOn)
     {
-        Color tmpColor = text.color;
-        tmpColor.a = isOn ? 1 : 0.5f;
-        text.color = tmpColor;
+        text.color = isOn ? choosenColor : notChoosenColor;
     }
 }
