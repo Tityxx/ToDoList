@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Смена цвета текста на тоггле
 /// </summary>
-public class TextColorController : MonoBehaviour
+public class ToggleTextColorController : MonoBehaviour
 {
     [SerializeField]
     private Text text;
@@ -29,7 +29,7 @@ public class TextColorController : MonoBehaviour
     }
 
     /// <summary>
-    /// Смена прозрачности текста
+    /// Смена цвета текста
     /// </summary>
     /// <param name="isOn"></param>
     public void ChangeColor(bool isOn)
