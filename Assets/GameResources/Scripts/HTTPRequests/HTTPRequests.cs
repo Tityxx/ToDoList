@@ -58,6 +58,7 @@ public class HTTPRequests : MonoBehaviour
     /// </summary>
     public void GetAuthorizationRequest(User user)
     {
+        Notification.Instance.ActivateWindow(true);
         StartCoroutine(GetAuthorization(url, user.email, user.password));
     }
 
@@ -65,6 +66,8 @@ public class HTTPRequests : MonoBehaviour
     {
         UnityWebRequest uwr = UnityWebRequest.Get(url + usersApi + "?" + emailApi + email + passwordApi + password);
         yield return uwr.SendWebRequest();
+
+        Notification.Instance.ActivateWindow(false);
 
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
         {
@@ -84,6 +87,7 @@ public class HTTPRequests : MonoBehaviour
     /// </summary>
     public void GetRegistrationRequest(User user)
     {
+        Notification.Instance.ActivateWindow(true);
         StartCoroutine(GetRegistration(url, user));
     }
 
@@ -93,6 +97,8 @@ public class HTTPRequests : MonoBehaviour
         
 
         yield return uwr.SendWebRequest();
+
+        Notification.Instance.ActivateWindow(false);
 
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
         {
@@ -111,6 +117,7 @@ public class HTTPRequests : MonoBehaviour
     /// </summary>
     public void DelTagRequest(string tagId, string token)
     {
+        Notification.Instance.ActivateWindow(true);
         StartCoroutine(DelTag(url, tagId, token));
     }
 
@@ -118,6 +125,8 @@ public class HTTPRequests : MonoBehaviour
     {
         UnityWebRequest uwr = UnityWebRequest.Delete(url + tagsApi + "/" + tagId + "?" + tokenApi + token);
         yield return uwr.SendWebRequest();
+
+        Notification.Instance.ActivateWindow(false);
 
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
         {
@@ -136,6 +145,7 @@ public class HTTPRequests : MonoBehaviour
     /// </summary>
     public void GetTagsRequest(string token)
     {
+        Notification.Instance.ActivateWindow(true);
         StartCoroutine(GetTags(url, token));
     }
 
@@ -143,6 +153,8 @@ public class HTTPRequests : MonoBehaviour
     {
         UnityWebRequest uwr = UnityWebRequest.Get(url + tagsApi + "/" + token);
         yield return uwr.SendWebRequest();
+
+        Notification.Instance.ActivateWindow(false);
 
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
         {
@@ -161,6 +173,7 @@ public class HTTPRequests : MonoBehaviour
     /// </summary>
     public void AddTagRequest(string tag, string token)
     {
+        Notification.Instance.ActivateWindow(true);
         StartCoroutine(AddTag(url, tag, token));
     }
 
@@ -170,6 +183,8 @@ public class HTTPRequests : MonoBehaviour
         uwr.downloadHandler = new DownloadHandlerBuffer();
 
         yield return uwr.SendWebRequest();
+
+        Notification.Instance.ActivateWindow(false);
 
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
         {
@@ -188,6 +203,7 @@ public class HTTPRequests : MonoBehaviour
     /// </summary>
     public void DelTaskRequest(string taskId, string token)
     {
+        Notification.Instance.ActivateWindow(true);
         StartCoroutine(DelTask(url, taskId, token));
     }
 
@@ -195,6 +211,8 @@ public class HTTPRequests : MonoBehaviour
     {
         UnityWebRequest uwr = UnityWebRequest.Delete(url + tasksApi + "/" + taskId + "?" + tokenApi + token);
         yield return uwr.SendWebRequest();
+
+        Notification.Instance.ActivateWindow(false);
 
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
         {
@@ -213,6 +231,7 @@ public class HTTPRequests : MonoBehaviour
     /// </summary>
     public void PutTaskRequest(Task task)
     {
+        Notification.Instance.ActivateWindow(true);
         StartCoroutine(PutTask(url, task));
     }
 
@@ -223,6 +242,8 @@ public class HTTPRequests : MonoBehaviour
         UnityWebRequest uwr = UnityWebRequest.Put(url + tasksApi, jsonToSend);
         uwr.SetRequestHeader("Content-Type", "application/json");
         yield return uwr.SendWebRequest();
+
+        Notification.Instance.ActivateWindow(false);
 
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
         {
@@ -241,6 +262,7 @@ public class HTTPRequests : MonoBehaviour
     /// </summary>
     public void GetTasksRequest(string token)
     {
+        Notification.Instance.ActivateWindow(true);
         StartCoroutine(GetTasks(url, token));
     }
 
@@ -249,6 +271,8 @@ public class HTTPRequests : MonoBehaviour
         UnityWebRequest uwr = UnityWebRequest.Get(url + tasksApi + "/" + token);
         yield return uwr.SendWebRequest();
 
+        Notification.Instance.ActivateWindow(false);
+
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
         {
             TaskGetResponse?.Invoke(false, null);
@@ -256,7 +280,7 @@ public class HTTPRequests : MonoBehaviour
         }
         else
         {
-            TaskGetResponse?.Invoke(false, new List<Task>(JsonHelper.CreateArrayFromJSON<Task>(uwr.downloadHandler.text)));
+            TaskGetResponse?.Invoke(true, new List<Task>(JsonHelper.CreateArrayFromJSON<Task>(uwr.downloadHandler.text)));
             Debug.Log("Get tasks");
         }
     }
@@ -266,6 +290,7 @@ public class HTTPRequests : MonoBehaviour
     /// </summary>
     public void AddTaskRequest(UnknownTask task)
     {
+        Notification.Instance.ActivateWindow(true);
         StartCoroutine(AddTask(url, task));
     }
 
@@ -278,6 +303,8 @@ public class HTTPRequests : MonoBehaviour
         uwr.SetRequestHeader("Content-Type", "application/json");
 
         yield return uwr.SendWebRequest();
+
+        Notification.Instance.ActivateWindow(false);
 
         if (uwr.isNetworkError || uwr.isHttpError || !IsSuccessNumberResponse(uwr.responseCode))
         {
