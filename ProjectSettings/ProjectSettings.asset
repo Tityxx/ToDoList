@@ -593,11 +593,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: Template3D
   metroPackageVersion: 1.0.0.0
-  metroCertificatePath: 
+  metroCertificatePath: D:\Proga\Unity\ToDoList\Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: AVT-716
+  metroCertificateIssuer: AVT-716
+  metroCertificateNotAfter: 8055efd34d3ad801
   metroApplicationDescription: Template_3D
   wsaImages: {}
   metroTileShortName: ToDoList
