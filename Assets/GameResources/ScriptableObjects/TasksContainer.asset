@@ -18,10 +18,14 @@ MonoBehaviour:
     dateStart: 00.00.00
     dateEnd: 
     name: test
-    info: 
+    info: 123
     priority: 5
     isDone: 0
     tags:
     - work
     - study
     userId: 603a07033b7385ba0a0d3485
+  taskPrefab: {fileID: 3838091196769092110, guid: c40f7cdb66cd50446a4ec89e76161af2,
+    type: 3}
+  parentForTasks: {fileID: 0}
+  taskTextField: {fileID: 0}

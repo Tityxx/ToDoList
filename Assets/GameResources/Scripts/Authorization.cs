@@ -13,6 +13,8 @@ public class Authorization : AbstractAuthRegstr
 
     [SerializeField]
     private TasksContainer tasks;
+    [SerializeField]
+    private TagsContainer tags;
 
     [SerializeField]
     private GameObject taskPrefab;
@@ -27,12 +29,14 @@ public class Authorization : AbstractAuthRegstr
     {
         HTTPRequests.Instance.AuthResponse += GetAuthResponse;
         HTTPRequests.Instance.TaskGetResponse += GetTasksResponse;
+        HTTPRequests.Instance.TagGetResponse += GetTagsResponse;
     }
 
     protected override void OnDestroy()
     {
         HTTPRequests.Instance.AuthResponse -= GetAuthResponse;
         HTTPRequests.Instance.TaskGetResponse -= GetTasksResponse;
+        HTTPRequests.Instance.TagGetResponse -= GetTagsResponse;
     }
 
     /// <summary>
@@ -49,7 +53,9 @@ public class Authorization : AbstractAuthRegstr
         {
             nextWindow.SetActive(true);
             tasks.userId = token.token;
+            tags.userId = token.token;
             DoGetTasks();
+            DoGetTags();
         }
         else
         {
@@ -74,14 +80,26 @@ public class Authorization : AbstractAuthRegstr
     private void InitTasks(List<Task> tasksList)
     {
         tasks.Tasks = new List<Task>(tasksList);
+        tasks.parentForTasks = parentForTasks;
+        tasks.taskTextField = taskTextField;
+        tasks.CreateTasksOnUI();
+    }
 
-        foreach (Task task in tasks.Tasks)
+    private void DoGetTags()
+    {
+        HTTPRequests.Instance.GetTagsRequest(tags.userId);
+    }
+
+    private void GetTagsResponse(bool state, List<Tag> tagsList)
+    {
+        if (state)
         {
-            GameObject goTask = Instantiate(taskPrefab, parentForTasks);
-            TaskWrapper taskWrapper = goTask.GetComponent<TaskWrapper>();
-            taskWrapper.Task = new Task(task.id, task.dateStart, task.dateEnd, task.name, task.info, task.priority, task.isDone, task.tags, task.userId);
-            taskWrapper.taskTextField = taskTextField;
-            taskWrapper.Init();
+            InitTags(tagsList);
         }
+    }
+
+    private void InitTags(List<Tag> tagsList)
+    {
+        tags.Tags = new List<Tag>(tagsList);
     }
 }

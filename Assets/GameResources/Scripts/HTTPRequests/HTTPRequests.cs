@@ -163,7 +163,7 @@ public class HTTPRequests : MonoBehaviour
         }
         else
         {
-            TagGetResponse?.Invoke(false, new List<Tag>(JsonHelper.CreateArrayFromJSON<Tag>(uwr.downloadHandler.text)));
+            TagGetResponse?.Invoke(true, new List<Tag>(JsonHelper.CreateArrayFromJSON<Tag>(uwr.downloadHandler.text)));
             Debug.Log("Get tags");
         }
     }
