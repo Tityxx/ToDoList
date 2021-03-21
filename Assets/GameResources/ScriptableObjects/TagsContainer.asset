@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22386baabbf86fe4c8bdeef7dfe036ec, type: 3}
   m_Name: TagsContainer
   m_EditorClassIdentifier: 
-  userId: 
-  Tags: []
+  userId: 603a07033b7385ba0a0d3485
+  Tags:
+  - id: 6057af766c6b64d28631b84c
+    tag: Tag 1
+    userId: 603a07033b7385ba0a0d3485
+  tagPrefab: {fileID: 5071105718738968034, guid: ddd0ebda4249bba4da52f2ae96f5337f,
+    type: 3}
+  parentForTags: {fileID: 0}

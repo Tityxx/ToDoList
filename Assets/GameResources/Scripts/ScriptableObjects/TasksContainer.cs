@@ -25,6 +25,8 @@ public class TasksContainer : ScriptableObject
     /// </summary>
     public void CreateTasksOnUI()
     {
+        RemoveAllChild();
+
         foreach (Task task in Tasks)
         {
             GameObject goTask = Instantiate(taskPrefab, parentForTasks);
@@ -32,6 +34,32 @@ public class TasksContainer : ScriptableObject
             taskWrapper.Task = new Task(task.id, task.dateStart, task.dateEnd, task.name, task.info, task.priority, task.isDone, task.tags, task.userId);
             taskWrapper.taskTextField = taskTextField;
             taskWrapper.Init();
+        }
+    }
+
+    /// <summary>
+    /// Удаление таски из контейнера и запрос на удаление
+    /// </summary>
+    /// <param name="taskId"></param>
+    public void DelTask(string taskId)
+    {
+        HTTPRequests.Instance.DelTaskRequest(taskId, userId);
+
+        for (int i = 0; i < Tasks.Count; i++)
+        {
+            if (Tasks[i].id.Equals(taskId))
+            {
+                Tasks.Remove(Tasks[i]);
+            }
+        }
+    }
+
+    private void RemoveAllChild()
+    {
+        int childs = parentForTasks.childCount;
+        for (int i = childs - 1; i >= 0; i--)
+        {
+            Destroy(parentForTasks.GetChild(i).gameObject);
         }
     }
 }
