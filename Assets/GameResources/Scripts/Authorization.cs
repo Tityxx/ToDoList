@@ -23,6 +23,9 @@ public class Authorization : AbstractAuthRegstr
     [SerializeField]
     public Text taskTextField;
 
+    [SerializeField]
+    public GameObject updateTaskWindow;
+
     private string errorAuth = "Упс...\nКажется, возникла какая-то ошибка...";
 
     protected override void Start()
@@ -54,6 +57,7 @@ public class Authorization : AbstractAuthRegstr
             nextWindow.SetActive(true);
             tasks.userId = token.token;
             tags.userId = token.token;
+            tasks.updateTaskWindow = updateTaskWindow;
             DoGetTasks();
             DoGetTags();
         }

@@ -14,6 +14,22 @@ public class TasksContainer : ScriptableObject
     public string userId;
     public List<Task> Tasks;
     public GameObject taskPrefab;
+    public GameObject updateTaskWindow;
+
+    public string LastUpdatedTaskId
+    {
+        get
+        {
+            return lastUpdatedTaskId;
+        }
+        set
+        {
+            lastUpdatedTaskId = value;
+            updateTaskWindow.SetActive(true);
+        }
+    }
+
+    private string lastUpdatedTaskId = string.Empty;
 
     [HideInInspector]
     public Transform parentForTasks;

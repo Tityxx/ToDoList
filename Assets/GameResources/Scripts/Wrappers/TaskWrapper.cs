@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// Обёртка для задач
@@ -23,6 +24,8 @@ public class TaskWrapper : MonoBehaviour
     private GameObject tagPrefab;
     [SerializeField]
     private Transform parentForTags;
+    [SerializeField]
+    private TasksContainer tasksContainer;
 
     private void Start()
     {
@@ -47,8 +50,8 @@ public class TaskWrapper : MonoBehaviour
     public void Init()
     {
         taskName.text = Task.name;
-        taskDateStart.text = Task.dateStart;
-        taskDateEnd.text = Task.dateEnd;
+        taskDateStart.text = Task.dateStart.Equals("") ? Task.dateStart : DateTime.Parse(Task.dateStart).ToString();
+        taskDateEnd.text = Task.dateEnd.Equals("") ? Task.dateEnd : DateTime.Parse(Task.dateEnd).ToString();
 
         foreach (string tag in Task.tags)
         {
@@ -57,5 +60,10 @@ public class TaskWrapper : MonoBehaviour
             tagWrapper.Tag = new Tag(string.Empty, tag, Task.userId);
             tagWrapper.Init();
         }
+    }
+
+    public void SetTaskId()
+    {
+        tasksContainer.LastUpdatedTaskId = Task.id;
     }
 }
